@@ -1,0 +1,23 @@
+name: CI workflow
+
+on:
+  push:
+    branches:
+      - main  # سيتم تفعيل الـ workflow عند الدفع إلى الفرع الرئيسي
+  pull_request:
+    branches:
+      - main  # سيتم تفعيل الـ workflow عند إنشاء طلب دمج (pull request) إلى الفرع الرئيسي
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # نحدد النظام الذي سيعمل عليه الـ CI
+    container: python:3.9-slim  # نحدد الصورة الحاوية التي سنستخدمها والتي تحتوي على Python 3.9
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3  # هذا يتيح لنا سحب الكود من المستودع
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip  # لتحديث pip إلى آخر إصدار
+          pip install -r requirements.txt  # لتثبيت جميع المكتبات في ملف requirements.txt

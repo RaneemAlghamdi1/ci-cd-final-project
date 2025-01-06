@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: nose-task
+spec:
+  steps:
+    - name: install-dependencies
+      image: python:3.9-slim
+      script: |
+        #!/bin/sh
+        pip install --upgrade pip
+        pip install -r /workspace/source/requirements.txt
+
+    - name: run-nose-tests
+      image: python:3.9-slim
+      script: |
+        #!/bin/sh
+        pip install nose
+        nosetests /workspace/source/tests
